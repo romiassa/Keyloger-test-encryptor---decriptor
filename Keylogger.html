@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keylogger </title>
+ <style>body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(ima.png);
+    background-size: cover;
+    color: #fff;
+}
+
+.container {
+    background: rgba(34, 46, 153, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    text-align: center;
+    width: 700px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+textarea, input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #1f78d1;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #1c86ee;
+}
+
+  </style> 
+   <script>let logging = false;
+
+    function startLogging() {
+        if (!logging) {
+            logging = true;
+            document.addEventListener('keydown', logKey);
+            console.log("Keylogging started.");
+        }
+    }
+    
+    function stopLogging() {
+        if (logging) {
+            logging = false;
+            document.removeEventListener('keydown', logKey);
+            console.log("Keylogging stopped.");
+        }
+    }
+    
+    function logKey(e) {
+        const log = document.getElementById('log');
+        log.value += `${e.key}\n`;
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Keylogger</h1>
+        <div class="controls">
+            <button onclick="startLogging()">Start Logging</button>
+            <button onclick="stopLogging()">Stop Logging</button>
+        </div>
+        <div class="log">
+            <h2>Log:</h2>
+            <textarea id="log" rows="10" cols="50" readonly></textarea>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

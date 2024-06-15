@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Encryptor & Decryptor </title>
+
+<style>body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url(ima.png);
+    background-size: cover;
+    color: #fff;
+    margin: 0;
+}
+
+.container {
+    background: rgba(27, 37, 149, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 700px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+textarea, input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #1769bc;
+    color: #ece6e6;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #1c86ee;
+}
+</style>
+<script>function caesarEncrypt(plaintext, key) {
+    let result = '';
+    for (let i = 0; i < plaintext.length; i++) {
+        let char = plaintext[i];
+        if (char.match(/[a-z]/i)) {
+            let code = plaintext.charCodeAt(i);
+            if (char >= 'A' && char <= 'Z') {
+                char = String.fromCharCode(((code - 65 + key) % 26 + 26) % 26 + 65);
+            } else if (char >= 'a' && char <= 'z') {
+                char = String.fromCharCode(((code - 97 + key) % 26 + 26) % 26 + 97);
+            }
+        } else {
+            char = plaintext[i];
+        }
+        result += char;
+    }
+    return result;
+}
+
+function caesarDecrypt(ciphertext, key) {
+    return caesarEncrypt(ciphertext, -key);
+}
+
+function encryptText() {
+    const plaintext = document.getElementById('plaintext').value;
+    const key = parseInt(document.getElementById('key').value);
+    const ciphertext = caesarEncrypt(plaintext, key);
+    document.getElementById('ciphertext').value = ciphertext;
+}
+
+function decryptText() {
+    const ciphertext = document.getElementById('ciphertext').value;
+    const key = parseInt(document.getElementById('key').value);
+    const plaintext = caesarDecrypt(ciphertext, key);
+    document.getElementById('plaintext').value = plaintext;
+}
+</script></head>
+<body>
+    <div class="container">
+        <h1>Text Encryptor & Decryptor</h1>
+        <div class="input-group">
+            <label for="plaintext">Plaintext:</label>
+            <textarea id="plaintext" rows="4" cols="50"></textarea>
+        </div>
+        <div class="input-group">
+            <label for="key">Key:</label>
+            <input type="number" id="key">
+        </div>
+        <div class="input-group">
+            <label for="ciphertext">Ciphertext:</label>
+            <textarea id="ciphertext" rows="4" cols="50" readonly></textarea>
+        </div>
+        <button onclick="encryptText()">Encrypt</button>
+        <button onclick="decryptText()">Decrypt</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
